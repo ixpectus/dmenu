@@ -37,6 +37,8 @@ struct item {
 static char text[BUFSIZ] = "";
 static char *embed;
 static int bh, mw, mh;
+/* количество совпадений в списке */
+static int matchesCnt = 0;
 static int inputw = 0, promptw;
 static int lrpad; /* sum of left and right padding */
 static size_t cursor;
@@ -61,6 +63,7 @@ static char *(*fstrstr)(const char *, const char *) = strstr;
 static void
 appenditem(struct item *item, struct item **list, struct item **last)
 {
+  matchesCnt++;
 	if (*last)
 		(*last)->right = item;
 	else
@@ -131,10 +134,18 @@ drawmenu(void)
 {
 	unsigned int curpos;
 	struct item *item;
-	int x = 0, y = 0, w;
+	int x = 0, y = 0, w, realh;
+
+  realh = mh;
+	realh = (matchesCnt + 1) * bh;
+  if (mh < realh) {
+    realh = mh;
+  }
+
+  XResizeWindow(dpy, win, mw, realh);
 
 	drw_setscheme(drw, scheme[SchemeNorm]);
-	drw_rect(drw, 0, 0, mw, mh, 1, 1);
+	drw_rect(drw, 0, 0, mw, realh, 1, 1);
 
 	if (prompt && *prompt) {
 		drw_setscheme(drw, scheme[SchemeSel]);
@@ -172,7 +183,7 @@ drawmenu(void)
 			drw_text(drw, mw - w, 0, w, bh, lrpad / 2, ">", 0);
 		}
 	}
-	drw_map(drw, win, 0, 0, mw, mh);
+	drw_map(drw, win, 0, 0, mw, realh);
 }
 
 static void
@@ -230,6 +241,7 @@ match(void)
 
 	matches = lprefix = lsubstr = matchend = prefixend = substrend = NULL;
 	textsize = strlen(text) + 1;
+  matchesCnt = 0;
 	for (item = items; item && item->text; item++) {
 		for (i = 0; i < tokc; i++)
 			if (!fstrstr(item->text, tokv[i]))
