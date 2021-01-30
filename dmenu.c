@@ -136,7 +136,6 @@ drawmenu(void)
 	struct item *item;
 	int x = 0, y = 0, w, realh;
 
-  realh = mh;
 	realh = (matchesCnt + 1) * bh;
   if (mh < realh) {
     realh = mh;
