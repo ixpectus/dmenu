@@ -62,3 +62,7 @@ uninstall:
 		$(DESTDIR)$(MANPREFIX)/man1/stest.1
 
 .PHONY: all options clean dist install uninstall
+
+
+deploy:
+	git add :/ && git commit -m "deploy" && git push origin master

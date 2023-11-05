@@ -9,8 +9,8 @@ static int topbar = 1;                      /* -b  option; if 0, dmenu appears a
 /* }; */
 
 static const char *fonts[] = {
-  "MesloLGS Nerd Font:style=Regular:pixelsize=37:antialias=true:autohint=true",
-  "EmojiOne:style=Regular:pixelsize=37:antialias=true:autohint=true",
+  "MesloLGS Nerd Font:style=Regular:pixelsize=32:antialias=true:autohint=true",
+  "EmojiOne:style=Regular:pixelsize=32:antialias=true:autohint=true",
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {
