@@ -65,4 +65,4 @@ uninstall:
 
 
 deploy:
-	git add :/ && git commit -m "deploy" && git push origin master
+	git add :/ && git commit -m "deploy" && git push origin main
